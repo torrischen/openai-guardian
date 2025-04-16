@@ -29,6 +29,10 @@ function _M.validate(token, client_ip)
 end
 
 function _M.authorize()
+    if ngx.req.get_method() == "OPTIONS" then
+        return true
+    end
+    
     local headers = ngx.req.get_headers()
     local auth_header = headers["Authorization"] or ""
     local token = auth_header:match("^[Bb]earer%s+(.+)$")
